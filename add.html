@@ -1,0 +1,96 @@
+<!DOCKTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    </head>
+    <body>
+        <div data-role="page" id="pageadd" data-theme="b" data-dialog="true">
+        <div data-role="header">
+            
+            <h2>Add</h2>
+        </div>
+        <div class="toast">Record Added successfully.</div>
+
+        <style type="text/css">
+            .toast {
+                background: rgba(0, 0, 0, .7);
+                width: 100%;
+                padding: 5px;
+                border-radius: 20px;
+                text-align: center;
+                color: #FFF;
+                display: none;
+                position: fixed;
+                top: 280px;
+                left: 0px;
+            }
+        </style>
+
+        <div data-role="main" class="ui-content" style="background: #000;">
+            <form action="" method="post" id="frm" enctype="multipart/form-data" >
+                <p>Name of the song</p>
+                <p><input type="text" name="sname"></p>
+                <p>Artist</p>
+                <p><input type="text" name="artist"></p>
+                <p>Lyrics</p>
+                <p><input type="text" name="lyric"></p>
+                <p>Upload Image</p>
+                <p> <input type="file" name="img"></p>
+                <p>Upload Song</p>
+                <p><input type="file" name="song"></p>
+                <p>Description</p>
+                <p><input type="text" name="des"></p>
+                <p><input type="button" value="Add" onclick="fun();"></p>
+
+            </form>
+        </div>
+    </div>
+        <script>
+            function fun() {
+
+            var form = $('#frm');
+            var url = 'add2.php';
+
+            $.ajax({
+                url: url,
+                type: "POST",
+                dataType: "json",
+                data: form.serialize(),
+                async: true,
+                success: function(result) {
+                        alert("Success");
+                    document.getElementById("frm").reset();
+                    $('.toast').fadeIn(1000);
+
+                    setTimeout(function() {
+                        $('.toast').fadeOut(1000);
+
+                        $.mobile.changePage("#pageadd", {
+                            transition: "slide",
+                            changeHash: false
+                        });
+                    }, 2000);
+
+                },
+                error: function(request, error) {
+
+
+
+                    alert('Network error has occurred please try again!');
+                }
+            });
+
+
+        }
+
+
+
+        </script>
+    </body>
+</html>

@@ -1,0 +1,581 @@
+<!DOCKTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="themes/jquery.mobile.icons.min.css">
+    <link rel="stylesheet" href="themes/theme.css">
+    <link rel="stylesheet" href="themes/theme.min.css">
+    <style>
+        h3,
+        h5 {
+            padding: 10px;
+        }
+        
+        h1 {
+            color: lavender;
+            font-size: medium;
+            font-weight: normal;
+        }
+        
+        #sdtl {
+            width: 60%;
+            height: 30%;
+            float: left;
+        }
+        
+        #photo {
+            width: 40%;
+            height: 30%;
+            float: left;
+        }
+        
+        #lyricdev {
+            width: 100%;
+            height: 100%;
+            /*background-color: black;*/
+            color: white;
+            float: left;
+        }
+        
+        #photoview {
+            position: relative;
+            padding-top: 5px;
+            width: 200px;
+            height: 200px;
+            border-radius: 200px
+        }
+    </style>
+
+
+</head>
+
+<body>
+
+    <!-- this main page-->
+    <div data-role="page" id="page1" data-theme="c" style="padding:5px;border-radius: 5px;">
+
+
+
+
+
+        <div data-role="panel" id="profile_info" data-position-fixed="true" data-position-fixed="true" data-display="reveal">
+            <a data-transition="slide" data-role="button" data-rel="close" class="ui-btn ui-btn-right ui-shadow ui-corner-all ui-icon-delete ui-btn-icon-notext ui-btn-b ui-btn-inline"></a>
+            <div style="margin-top:8%;margin-left:0px;width:30%; float:left;">
+                <img src="" id="show_profile_pic" style="height:150px;width:150px;border-radius:150px;">
+            </div>
+            <div style="margin-top:8%;margin-left:0px;width:70%;  float:left; height:210px;">
+                <h2 style="padding-top:150px;text-align:center;" id="show_username"></h2>
+            </div>
+            <div style="float:left;width:100%;margin-top: 5px;">
+                <p id="show_name"></p>
+                <p id="show_username2"></p>
+                <p id="show_email"></p>
+                <p>Gender:
+                    <p id="show_gedner"></p>
+                </p>
+
+                <button data-role="button" style="display:none;" id="logoutbtn" onclick="logout();" data-theme="b">Logout</button>
+            </div>
+
+        </div>
+
+
+
+
+
+
+        <div data-role="header" data-position="fixed" data-dismissible="false">
+            <!-- <a href="#popupMenu" data-icon="grid" data-transition="ZoomIn" class="ui-btn-left">Menu</a>-->
+            <a href="#pageadd" data-transition="slide" id="addnewbtn" data-icon="plus" class="ui-btn-right" style="display:none;">Add new</a>
+            <h2 id="acholder" class="ui-right"></h2>
+            <a href="#popupMenu" data-role="button" data-rel="popup" class="ui-btn-left" data-inline="true" data-transition="slidedown" data-icon="grid" data-theme="c">Menu</a>
+            <div data-role="popup" id="popupMenu" data-theme="c">
+                <ul data-role="listview" data-inset="true" style="min-width:210px;">
+                    <li data-role="divider">Menu</li>
+                    <li><a href="#profile_info" id="prfl_btn" data-rel="close" style="display:none;" data-transition="slide" data-direction="reverse" onclick="clr();">Profile</a></li>
+                    <li><a href="#popupLogin" data-transition="pop">LogIn</a></li>
+                    <li><a href="#signup" id="signup" data-transition="pop">SignUp</a></li>
+                    <li><a href="#themelist">Themes</a></li>
+                    <li><a href="javascript:void(0);" onclick="delfrm();">Delete</a></li>
+                    <li><button data-role="button" style="display:none;" id="logoutbtn" onclick="logout();" data-theme="b">Logout</button></li>
+                </ul>
+            </div>
+
+            <h2>Songs</h2>
+        </div>
+
+
+        <div data-role="main" class="ui-content">
+            <ul data-role="listview" id="dtalist" data-filter="true">
+
+            </ul>
+        </div>
+    </div>
+
+    
+
+    <div data-role="page" id="themelist" data-theme="c">
+        <div data-role="header">
+            <h2>Themes</h2>
+            <a href="#page1" data-transition="pop" data-icon="back" data-direction="reverse">Back</a>
+        </div>
+        <div data-role="content" id="first-content">
+            <h4 style="text-align: center" id="current-theme">Current Theme: a</h4>
+            <p><a data-role="button" data-theme="a" onclick="themechange();" value='a'>Theme a</a></p>
+            <p><a data-role="button" data-theme="b" onclick="themechange();" value='b'>Theme b</a></p>
+            <p><a data-role="button" data-theme="c" onclick="themechange();" value='c'>Theme c</a></p>
+            <p><a data-role="button" data-theme="d" onclick="themechange();" value='d'>Theme d</a></p>
+            <p><a data-role="button" data-theme="e" onclick="themechange();" value='c'>Theme e</a></p>
+        </div>
+    </div>
+
+
+
+
+    <!--Log In page Complete-->
+    <div data-role="page" id="popupLogin" data-theme="c">
+        <div data-role="header">
+            <a href="#page1" data-transition="slide" data-icon="back" data-direction="reverse">Back</a>
+            <h2>Sign In</h2>
+        </div>
+        <div data-role="main" data-theme="c">
+            <form id="loginfrm" action="" method="post">
+
+                <div style="padding:10px 20px;">
+
+                    <h3 style="text-align: center;">Please sign in</h3>
+                    <label for="un" class="ui-hidden-accessible">Username:</label>
+                    <input type="text" name="user" id="un">
+                    <label for="pw" class="ui-hidden-accessible">Password:</label>
+                    <input type="password" name="pass" id="pw">
+                    <button type="button" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left" onclick="sfun();">Sign in</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!--page for adding new information-->
+    <div data-role="page" id="pageadd" data-theme="c" data-dialog="true">
+        <div data-role="header">
+            <a href="#page1" data-transition="slide" data-icon="back" data-direction="reverse">Back</a>
+            <h2>Add</h2>
+        </div>
+        <div class="toast" id="rectoast">Record Added successfully.</div>
+        <div class="toast" id="logtoast">Login successfull</div>
+        <div class="toast" id="logouttoast">Logout Successfully</div>
+
+        <style type="text/css">
+            .toast {
+                z-index: 10;
+                background: rgba(1, 0, 0, .7);
+                width: 100%;
+                padding: 5px;
+                border-radius: 20px;
+                text-align: center;
+                color: black;
+                display: none;
+                position: fixed;
+                top: 280px;
+                left: 0px;
+                color: white;
+            }
+        </style>
+
+        <div data-role="main" class="ui-content" data-theme="c">
+            <form action="" method="post" id="frm" data-theme="c" enctype="multipart/form-data" style="background: #fff; color:black;">
+                <p>Name of the song</p>
+                <p><input type="text" name="sname" required=""></p>
+                <p>Artist</p>
+                <p><input type="text" name="artist" required=""></p>
+                <p>Lyrics</p>
+                <p><input type="text" name="lyric" required=""></p>
+                <p>Upload Image</p>
+                <p> <input type="file" name="img" required=""></p>
+                <p>Upload Song</p>
+                <p><input type="file" name="song" required=""></p>
+                <p>Description</p>
+                <p><input type="text" name="des" required=""></p>
+
+                <p><button type="button" class="ui-btn ui-corner-all ui-shadow ui-btn-c ui-btn-icon-left" onclick="fun();">Add</button></p>
+
+            </form>
+        </div>
+    </div>
+
+
+
+    <!--Details view page-->
+    <div data-role="page" id="pageview" data-theme="c">
+        <div data-role="header" data-position="fixed">
+            <a href="#page1" data-transition="slide" data-icon="back" data-direction="reverse" onclick="stop();">Back</a>
+            <h2>Details</h2>
+        </div>
+        <div data-role="main">
+
+            <div data-position="fixed">
+                <div id="sdtl">
+                    <h3 id="sname"></h3>
+                    <h5 id="artist"></h5>
+                </div>
+
+
+
+                <div id="photo">
+                    <img src='' id="img" style="width:150px;height:150px;border-radius: 150px;">
+                </div>
+
+
+                <div id="play">
+                    <audio controls id="song" style="width:100%;">
+                        
+                    </audio>
+                </div>
+            </div>
+
+            <div id="lyricdev">
+
+                <div style="width:70%;float:left; text-align:center;">
+                    <p id="lyric" style="width:100%;float:left;border-right: 2px solid black;">
+                        <p>
+                </div>
+
+                <div style="width:25%;float:left;">
+                    <p id=des style="margin-left:5px;width:100%;float:left;text-align:right;"></p>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+    <!--SignUp page -->
+    <div data-role="page" id="signup">
+        <div data-role="header">
+            <a href="#page1" data-transition="slide" data-icon="back" data-direction="reverse">Back</a>
+            <h2>SignUp</h2>
+        </div>
+
+        <div data-role="main" class="ui-content" data-theme="c">
+            <form action="" method="post" id="sign_up_frm" data-theme="c" enctype="multipart/form-data" style="background: #fff; color:black;">
+                <p>Name</p>
+                <p><input type="text" name="sign_up_name" required=""></p>
+                <p>User Name</p>
+                <p><input type="text" name="sign_up_user_name" required=""></p>
+                <p>Gender</p>
+                <p>Email</p>
+                <p><input type="email" name="sign_up_mail"></p>
+                <select name="gender">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+                <p>Profile Picture</p>
+                <p><input type="file" name="sign_up_img" required=""></p>
+                <p>Password</p>
+                <p><input type="password" name="sign_up_pw" required=""></p>
+                <p>Confirm Password</p>
+                <p><input type="password" name="sign_up_cpw" required=""></p>
+                <p><button type="button" class="ui-btn ui-corner-all ui-shadow ui-btn-c ui-btn-icon-left" onclick="sign_up_fun();">Submit</button></p>
+
+            </form>
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <!--For deleteing page -->
+    <div data-role="page" id="pagedel" data-theme="c">
+        <div data-role="header">
+            <h2>Delete</h2>
+        </div>
+        <div data-role="main">
+        </div>
+    </div>
+
+
+    <script>
+        function clr() {
+            $('#popupMenu').popup('close');
+
+
+        }
+
+
+
+        $(document).on("pagebeforeshow", "#page1", function(event) { //getting the json in page1
+            $.getJSON("json.php", function(data) {
+                $("#dtalist").html("");
+                $.each(data, function(key, val) {
+                    /*$("#dtalist").append("<li><a href='#pageview?sname=" + val.sname + "&id=" + val.id + "' data-transition='slide' >" + val.sname +
+                    "</a></li>");*/
+                    //$("#dtalist").append("<li><a href='#pageview?sname="+val.sname+"&id="+val.id+"'data-transition='slide'>"><h2>"+val.sname+"</h2></a></li>"
+
+                    var l = val.lyric;
+                    var lcc = l.replace(/[#_&'*^'$@!+-/"`~%]/g, ' ');
+                    //alert(lcc);
+
+                    //alert(lc);
+                    $("#dtalist").append("<li><a  href='#pageview?sname=" + val.sname + "&artist=" + val.artist + "&img=" + val.img + "&song=" + val.song + "&des=" + val.des + "&lyric=" +lcc + "' data-transition='slide' ><img src='img/" + val.img + "' style='height:90px;width:90px;border-radius:90px;background-color:red;margin-top:10px;'><h1 style='font-size:26px;'>" + val.sname + "</h1><p>" + val.artist + "</p></a></li>");
+
+                });
+                $('#dtalist').listview('refresh');
+
+
+            });
+        });
+
+        $(document).on("pagebeforeshow", "#page1", function(event) {
+            $.getJSON("logjson.php", function(data) {
+                // alert(data);
+                // $("#dta").html("");
+                $.each(data, function(key, val) {
+
+                    $username = val.username;
+                    $theme = val.theme;
+                   
+                    //alert(val.username);
+                    if ($username.length != 0 && $("#acholder").val != $username) {
+                        $("#acholder").html("");
+                        // alert($("#acholder").val);
+                        $("#acholder").append("<p>" + val.username + "</p>");
+                        //$("#dta").append("<li><a href='#page2?name=" + val.name + "&id=" + val.id + "' data-transition='slide' >" + val.name + "</a></li>");
+                        $("#logoutbtn").show();
+                        $("#addnewbtn").show();
+                        $("#signup").hide();
+                        $("#prfl_btn").show();
+                        document.getElementById("show_profile_pic").src = "profile/" + val.pphoto;
+                        document.getElementById("show_username").innerHTML = val.username;
+                        document.getElementById("show_username2").innerHTML = val.username;
+                        document.getElementById("show_name").innerHTML=val.name;
+                        document.getElementById("show_email").innerHTML=val.email;
+                        document.getElementById("show_gedner").innerHTML=val.gender;
+
+
+
+                    } else {
+                        $("#acholder").append("<p></p>");
+                        $("#logoutbtn").hide();
+                    }
+                });
+
+                //$('#dta').listview('refresh');
+            });
+
+        });
+
+
+
+        function sfun() {
+            var form = $('#loginfrm');
+            var url = 'login.php';
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: form.serialize(),
+                async: true,
+                success: function(result) {
+
+                    document.getElementById("loginfrm").reset();
+                    //$('.toast').innerHTML = "Login successfull.";
+                    $('#logtoast').fadeIn(1000);
+
+                    setTimeout(function() {
+                        $('#logtoast').fadeOut(1000);
+
+                        $.mobile.changePage("#page1", {
+                            transition: "slide",
+                            changeHash: false
+                        });
+                    }, 2000);
+
+                },
+                error: function(request, error) {
+                    alert('Network error has occurred please try again!');
+                }
+            });
+        }
+
+
+
+        function fun() {
+
+            /* var form = $('#frm');
+             var url = 'add2.php';*/
+            var form = $('#frm')[0];
+            var data = new FormData(form);
+
+            $.ajax({
+
+                url: 'add2.php',
+                type: "POST",
+                enctype: 'multipart/form-data',
+                dataType: "json",
+                //data: form.serialize(),
+                async: true,
+
+                data: data,
+                processData: false,
+                contentType: false,
+                cache: false,
+                timeout: 600000,
+                success: function(result) {
+                    document.getElementById("frm").reset();
+                    //$(".toast").innerHTML = " Record Added successfully";
+                    $('#rectoast').fadeIn(1000);
+
+                    setTimeout(function() {
+                        $('#rectoast').fadeOut(1000);
+
+                        $.mobile.changePage("#page1", {
+                            transition: "slide",
+                            changeHash: false
+                        });
+                    }, 2000);
+
+
+                },
+                error: function(request, error) {
+
+
+
+                    alert('Network error has occurred please try again!');
+                }
+            });
+
+
+        }
+
+
+
+        function sign_up_fun() {
+            var form = $('#sign_up_frm')[0];
+            var data = new FormData(form);
+
+            $.ajax({
+
+                url: 'signup.php',
+                type: "POST",
+                enctype: 'multipart/form-data',
+                dataType: "json",
+                //data: form.serialize(),
+                async: true,
+
+                data: data,
+                processData: false,
+                contentType: false,
+                cache: false,
+                timeout: 600000,
+                success: function(result) {
+                    document.getElementById("frm").reset();
+                    //$(".toast").innerHTML = " Record Added successfully";
+                    $('#rectoast').fadeIn(1000);
+
+                    setTimeout(function() {
+                        $('#rectoast').fadeOut(1000);
+
+                        $.mobile.changePage("#page1", {
+                            transition: "slide",
+                            changeHash: false
+                        });
+                    }, 2000);
+
+
+                },
+                error: function(request, error) {
+                    alert('Network error has occurred please try again!');
+                }
+            });
+
+        }
+
+
+
+
+
+
+
+        function logout() {
+            var url = 'logout.php';
+            $.ajax({
+                url: url,
+                success: function(result) {
+                    $('#logouttoast').fadeIn(1000);
+
+                    setTimeout(function() {
+
+                        $('#logouttoast').fadeOut(1000);
+                        $.mobile.changePage("#page1", {
+                            transition: "slide",
+                            changeHash: false
+                        });
+                    }, 1000);
+                    location.reload();
+                },
+                error: function(request, error) {
+                    alert('Network error has occurred please try again!');
+                }
+            });
+        }
+
+
+
+
+
+
+
+
+        function stop() {
+            x = document.getElementById("song");
+            x.pause();
+        }
+
+
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+        $(document).on("pagecontainerbeforetransition", function(e, data) {
+            if ($.type(data.toPage) !== "undefined" && $.type(data.absUrl) !== "undefined" && data.toPage[0].id == "pageview") {
+                var sname = getParameterByName('sname', data.absUrl);
+                var artist = getParameterByName('artist', data.absUrl);
+                var img = getParameterByName('img', data.absUrl);
+                var song = getParameterByName('song', data.absUrl);
+                var lyric = getParameterByName('lyric', data.absUrl);
+                var des = getParameterByName('des', data.absUrl);
+                document.getElementById("sname").innerHTML = sname;
+                document.getElementById("artist").innerHTML = artist;
+                document.getElementById("lyric").innerHTML =lyric;
+                document.getElementById("img").src = "img/" + img;
+                document.getElementById("song").src = "adio/" + song;
+                document.getElementById("des").innerHTML = des;
+            
+
+            }
+
+        });
+    </script>
+
+</body>
+
+</html>
